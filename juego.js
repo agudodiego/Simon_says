@@ -100,6 +100,7 @@ function resetearJuego() {
     // reseteo variables
     jugada = 0;
     contador = 0;
+    $score.innerText = `Total: ${contador}`
 
     // reseteo el array
     secuenciaSimon = [];
