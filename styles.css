@@ -1,0 +1,184 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-simon: #000;
+    --borde-fino: .75em;
+    --borde-fino-negativo: -.75em;
+    --borde-grueso: 1.5em;
+}
+
+html{
+    font-size: 62.5%;
+    background-color: #666;
+    font-family: 'Lato', sans-serif;
+}
+
+.header{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+}
+
+.titulo{
+    font-size: 4em;
+    margin-bottom: 1.5rem;
+}
+
+.container{
+    width: 30rem;
+    height: 30rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    align-content: center;
+}
+
+/* *************** tecla 1 ********************* */
+.container__tecla0{
+    position: relative;
+    width: 15rem;
+    height: 15rem;
+    background-color: #EC7063;
+    border-width: var(--borde-grueso) var(--borde-fino) var(--borde-fino) var(--borde-grueso);
+    border-style: solid;
+    border-color: var(--color-simon);
+    border-radius: 100% 0 0 0;
+}
+
+.container__tecla0::after{
+    content: "";
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--color-simon);
+    bottom: var(--borde-fino-negativo);
+    right: var(--borde-fino-negativo);
+    border-radius: 100% 0 0 0;    
+}
+
+/* *************** tecla 2 ********************* */
+
+.container__tecla1{
+    position: relative;
+    width: 15rem;
+    height: 15rem;
+    background-color: #7CB342 ;
+    border-width: var(--borde-grueso) var(--borde-grueso) var(--borde-fino) var(--borde-fino);
+    border-style: solid;
+    border-color: var(--color-simon);
+    border-radius: 0 100% 0 0;
+}
+
+.container__tecla1::after{
+    content: "";
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--color-simon);
+    bottom: var(--borde-fino-negativo);
+    left: var(--borde-fino-negativo);
+    border-radius: 0 100% 0 0;    
+}
+
+/* *************** tecla 3 ********************* */
+
+.container__tecla2{
+    position: relative;
+    width: 15rem;
+    height: 15rem;
+    background-color: #71aaaa;    
+    border-width: var(--borde-fino) var(--borde-grueso) var(--borde-grueso) var(--borde-fino);
+    border-style: solid;
+    border-color: var(--color-simon);
+    border-radius: 0 0 100% 0;
+}
+
+.container__tecla2::after{    
+    content: "";
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--color-simon);
+    top: var(--borde-fino-negativo);
+    left: var(--borde-fino-negativo);
+    border-radius: 0 0 100% 0;    
+}
+
+/* *************** tecla 4 ********************* */
+
+.container__tecla3{
+    position: relative;
+    width: 15rem;
+    height: 15rem;
+    background-color: #F7DC6F;
+    border-width: var(--borde-fino) var(--borde-fino) var(--borde-grueso) var(--borde-grueso);
+    border-style: solid;
+    border-color: var(--color-simon);
+    border-radius: 0 0 0 100%;
+}
+
+.container__tecla3::after{    
+    content: "";
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--color-simon);
+    top: var(--borde-fino-negativo);
+    right: var(--borde-fino-negativo);
+    border-radius: 0 0 0 100%;    
+}
+
+.container__tecla0:hover,
+.container__tecla1:hover,
+.container__tecla2:hover,
+.container__tecla3:hover{
+    cursor: pointer;
+}
+
+.score{
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.btn-start{
+    font-size: 2.5rem;
+    background-color: #222;
+    color: #aaa;
+    padding: .3rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 100ms;
+    margin-bottom: 1rem;
+}
+
+.btn-start:hover{
+    cursor: pointer;
+    transform: scale(0.96);
+}
+
+.deshabilitarBoton{
+    background-color: #777;
+    transform: scale(0.96);
+    cursor: default;
+}
+
+.deshabilitarBoton:hover{
+    cursor: default;
+}
+
+.encendido{
+    filter: contrast(100);
+}
+
+.perdiste{
+    filter: opacity(.2);
+}
