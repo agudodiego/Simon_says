@@ -7,11 +7,17 @@ const $color1 = document.querySelector(".container__tecla1");
 const $color2 = document.querySelector(".container__tecla2");
 const $color3 = document.querySelector(".container__tecla3");
 
+const $sonido0 = document.querySelector(".sonido0");
+const $sonido1 = document.querySelector(".sonido1");
+const $sonido2 = document.querySelector(".sonido2");
+const $sonido3 = document.querySelector(".sonido3");
+
 const $score = document.querySelector(".score");
 
 const $btnStart = document.querySelector(".btn-start");
 
 const $colores = [$color0, $color1, $color2, $color3];
+const $sonidos = [$sonido0, $sonido1, $sonido2, $sonido3];
 let secuenciaSimon = [];
 let jugada = 0; // representa cada jugada dentro de una ronda, en cada ronda se resetea
 let contador = 0;
@@ -19,8 +25,8 @@ let puedeJugar;
 
 // DECLARACION DE FUNCIONES ********************************
 
-//funcion para prender/apagar cada tecla
-const prenderApagarBoton = (indice, time) => {
+//funcion para prender/apagar cada tecla (con sonido). El ultimo parametro es para ver si tiene o no sonido
+const prenderApagarBoton = (indice, time, conSonido) => {
 
     if (indice === "pausa") {
         // lo siguiente retorna una promesa vacia, es solo para agregar una pausa
@@ -30,8 +36,19 @@ const prenderApagarBoton = (indice, time) => {
                 resolve();
             }, 450);
         })
-    } else {
-        //al entrar "enciendo" el color
+    } else if (indice !== "pausa" && conSonido) {
+        //al entrar "enciendo" el color y sonido
+        $colores[indice].classList.toggle("encendido");
+        $sonidos[indice].play();
+
+        //luego de unos segundos "apaga" el color
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve($colores[indice].classList.toggle("encendido"));
+            }, time);
+        })
+    }else{ // este bloque se ejecutara con la secuencia de bienvenida para que sea sin sonido
+        //al entrar "enciendo" SOLO el color
         $colores[indice].classList.toggle("encendido");
 
         //luego de unos segundos "apaga" el color
@@ -40,6 +57,7 @@ const prenderApagarBoton = (indice, time) => {
                 resolve($colores[indice].classList.toggle("encendido"));
             }, time);
         })
+
     }
 }
 
@@ -47,16 +65,16 @@ const prenderApagarBoton = (indice, time) => {
 const lucesBienvenida = async () => {
     // en cada await espero a que se complete la accion para
     // pasar a la siguiente linea.
-    await prenderApagarBoton(0, 150);
-    await prenderApagarBoton(1, 150);
-    await prenderApagarBoton(2, 150);
-    await prenderApagarBoton(3, 150);
+    await prenderApagarBoton(0, 150, false);
+    await prenderApagarBoton(1, 150, false);
+    await prenderApagarBoton(2, 150, false);
+    await prenderApagarBoton(3, 150, false);
 
     // repito una vez mas la secuencia de luces
-    await prenderApagarBoton(0, 150);
-    await prenderApagarBoton(1, 150);
-    await prenderApagarBoton(2, 150);
-    await prenderApagarBoton(3, 150);
+    await prenderApagarBoton(0, 150, false);
+    await prenderApagarBoton(1, 150, false);
+    await prenderApagarBoton(2, 150, false);
+    await prenderApagarBoton(3, 150, false);
 
     // hago una pausa antes de iniciar el juego
     setTimeout(() => {
@@ -81,7 +99,7 @@ function agregarColorSecuencia() {
 const reproducirSecuencia = async () => {
     let tiempoEspera = 500;
     for (let i = 0; i < secuenciaSimon.length; i++) {
-        await prenderApagarBoton(secuenciaSimon[i], tiempoEspera);
+        await prenderApagarBoton(secuenciaSimon[i], tiempoEspera, true);
     }
     puedeJugar = true;
     // dps de esto queda a la espera de que el usuario haga su jugada
@@ -109,7 +127,7 @@ function resetearJuego() {
 
 const compararConSecuencia = async (teclaPresionada) => {
 
-    await prenderApagarBoton(teclaPresionada, 350);
+    await prenderApagarBoton(teclaPresionada, 350, true);
     await prenderApagarBoton("pausa");
     if (teclaPresionada === secuenciaSimon[jugada]) {
         // aumento de a 2 para saltearme la "pausa"
@@ -149,7 +167,7 @@ const compararConSecuencia = async (teclaPresionada) => {
 document.addEventListener("click", (e) => {
 
     if (e.target.matches(".btn-start")) {
-        resetearJuego();        
+        resetearJuego();
 
         // deshabilito boton de inicio
         $btnStart.setAttribute("disabled", "true");
